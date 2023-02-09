@@ -15,6 +15,7 @@ body {
   background-color: rgb(243, 243, 243);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2.5rem;
 
   font-family: 'Raleway', sans-serif;
@@ -23,6 +24,10 @@ body {
 }
 
 /* HEADER */
+header {
+  width: 100%;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -66,6 +71,7 @@ input {
 
 /* MAIN */
 main {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -99,7 +105,7 @@ main {
 #customer-transactions-container {
   border-radius: 1.5rem;
   background-color: #fff;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .transaction {
@@ -138,7 +144,7 @@ main {
 }
 
 .operation {
-  padding: 6rem;
+  padding: 3rem;
   border-radius: 2rem;
   width: 100%;
 
@@ -194,5 +200,46 @@ main {
   #customer-operations-container {
     display: flex;
     gap: 2rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    flex-flow: row wrap;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  #user-account-details {
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  .section-title h1 {
+    font-size: 2.2rem;
+  }
+
+  .balance {
+    font-size: 3rem;
+  }
+
+  #customer-transactions-container {
+    width: 65.5%;
+  }
+
+  #customer-operations-container {
+    width: 33%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  header {
+    max-width: 120rem;
+    padding: 2rem 0;
+  }
+
+  main {
+    max-width: 120rem;
+    margin-top: 3rem;
   }
 }
