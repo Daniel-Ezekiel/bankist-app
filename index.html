@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="./img/icon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Bankist</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <p>Login to get started</p>
+
+      <img src="./img/logo.png" alt="logo" class="logo">
+
+      <div class="form-control__login">
+        <input id="username" type="text" placeholder="USER" maxlength="2">
+        <input id="pin" type="text" placeholder="PIN" maxlength="4">
+        <button id="btn__signin">
+          &rarr;
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- User Account Details - Account Balance -->
+    <section id="user-account-details">
+      <div class="section-title">
+        <h1>Current balance</h1>
+        <span>As of 09/02/2023, 13:10</span>
+      </div>
+
+      <div class="balance">
+        <span>25 952,59 €</span>
+      </div>
+    </section>
+
+    <!-- Transactions -->
+    <section id="customer-transactions-container">
+      <div class="transaction">
+        <div>
+          <span class="transaction-type">
+            8 Deposit
+          </span>
+
+          <span class="date">
+            12/03/2020
+          </span>
+        </div>
+
+        <span class="transaction-amount">
+          1300,00 €
+        </span>
+      </div>
+
+      <div class="transaction">
+        <div>
+          <span class="transaction-type">
+            8 Deposit
+          </span>
+
+          <span class="date">
+            12/03/2020
+          </span>
+        </div>
+
+        <span class="transaction-amount">
+          1300,00 €
+        </span>
+      </div>
+
+      <div class="transaction">
+        <div>
+          <span class="transaction-type">
+            8 Deposit
+          </span>
+
+          <span class="date">
+            12/03/2020
+          </span>
+        </div>
+
+        <span class="transaction-amount">
+          1300,00 €
+        </span>
+      </div>
+
+      <div class="transaction">
+        <div>
+          <span class="transaction-type">
+            8 Deposit
+          </span>
+
+          <span class="date">
+            12/03/2020
+          </span>
+        </div>
+
+        <span class="transaction-amount">
+          1300,00 €
+        </span>
+      </div>
+
+      <div class="transaction">
+        <div>
+          <span class="transaction-type">
+            8 Deposit
+          </span>
+
+          <span class="date">
+            12/03/2020
+          </span>
+        </div>
+
+        <span class="transaction-amount">
+          1300,00 €
+        </span>
+      </div>
+
+      <div class="transaction">
+        <div>
+          <span class="transaction-type">
+            8 Deposit
+          </span>
+
+          <span class="date">
+            12/03/2020
+          </span>
+        </div>
+
+        <span class="transaction-amount">
+          1300,00 €
+        </span>
+      </div>
+
+      <div class="transaction">
+        <div>
+          <span class="transaction-type">
+            8 Deposit
+          </span>
+
+          <span class="date">
+            12/03/2020
+          </span>
+        </div>
+
+        <span class="transaction-amount">
+          1300,00 €
+        </span>
+      </div>
+    </section>
+
+    <!-- Operations -->
+    <section id="customer-operations-container">
+      <!-- Transfer Operation -->
+      <div class="operation transfer">
+        <h2>Transfer money</h2>
+
+        <div class="form-control__operation">
+          <div>
+            <input id="recipient" type="text" placeholder="">
+            <label for="recipient">Transfer to</label>
+          </div>
+          <div>
+            <input id="amount" type="text" placeholder="">
+            <label for="amount">Amount</label>
+          </div>
+          <button id="btn__send">
+            &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Loan Operation -->
+      <div class="operation loan-request">
+        <h2>Request Loan</h2>
+
+        <div class="form-control__operation">
+          <div>
+            <input id="amount" type="text" placeholder="">
+            <label for="amount">Amount</label>
+          </div>
+          <button id="btn__send">
+            &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Close Operation -->
+      <div class="operation account-closure">
+        <h2>Close Account</h2>
+
+        <div class="form-control__operation">
+          <div>
+            <input id="username-confirm" type="text" placeholder="">
+            <label for="username-confirm">Confirm User</label>
+          </div>
+          <div>
+            <input id="pin-confirm" type="text" placeholder="">
+            <label for="pin-confirm">Confirm PIN</label>
+          </div>
+          <button id="btn__send">
+            &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

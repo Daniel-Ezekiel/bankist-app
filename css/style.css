@@ -1,0 +1,198 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  padding: 1.2rem;
+  background-color: rgb(243, 243, 243);
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  font-family: 'Raleway', sans-serif;
+
+  /* transition: all 1s; */
+}
+
+/* HEADER */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav p {
+  display: none;
+  font-size: 1.8rem;
+}
+
+.logo {
+  width: 5rem;
+  height: auto;
+}
+
+.form-control__login {
+  display: flex;
+  gap: 1rem;
+}
+
+input {
+  width: 6rem;
+  border: none;
+  border-radius: 2.5rem;
+  padding: 0.8rem;
+
+  text-align: center;
+}
+
+#btn__signin,
+#btn__send {
+  outline: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  font-size: 1.8rem;
+}
+
+/* MAIN */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  transition: all 1s;
+}
+
+/* USER ACCOUNT INFORMATION */
+#user-account-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title h1 {
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.section-title span {
+  font-size: 1.3rem;
+  color: #888;
+}
+
+.balance {
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+
+/* TRANSACTIONS */
+#customer-transactions-container {
+  border-radius: 1.5rem;
+  background-color: #fff;
+  width: 100%;
+}
+
+.transaction {
+  border-bottom: 0.1rem solid #ebe9e9;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction div {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  font-size: 1.2rem;
+}
+
+.transaction-type {
+  padding: 0.5rem 1.2rem;
+  border-radius: 1.5rem;
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+}
+
+.transaction-amount {
+  font-size: 2rem;
+}
+
+/* OPERATIONS */
+#customer-operations-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.operation {
+  padding: 6rem;
+  border-radius: 2rem;
+  width: 100%;
+
+  text-align: center;
+}
+
+.operation.transfer {
+  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
+}
+
+.operation.loan-request {
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+}
+
+.operation.account-closure {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+
+.operation h2 {
+  font-size: 2rem;
+  margin-bottom: 1.8rem;
+}
+
+.form-control__operation {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.form-control__operation div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  font-size: 1.3rem;
+}
+
+.form-control__operation input {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+#btn__send {
+  align-self: flex-start;
+}
+
+@media screen and (min-width: 540px) {
+  nav p {
+    display: block;
+  }
+
+  #customer-operations-container {
+    display: flex;
+    gap: 2rem;
+  }
+}
