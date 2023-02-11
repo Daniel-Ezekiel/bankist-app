@@ -36,3 +36,46 @@ const account4 = {
 const accounts = [account1, account2, account3, account4];
 
 /***************************************/
+const allTransactionsContainer = document.querySelector(
+  '#customer-transactions-container'
+);
+
+const mainContainer = document.querySelector('main');
+const btnSignin = document.querySelector('#btn__signin');
+
+// USER SIGN IN
+btnSignin.addEventListener('click', function () {
+  allTransactionsContainer.innerHTML = '';
+
+  const usernameInput = document.querySelector('#username');
+  const userPinInput = document.querySelector('#pin');
+
+  let username = usernameInput.value;
+  let pin = userPinInput.value;
+
+  username.toLowerCase() === 'js' &&
+    Number(pin) === 1111 &&
+    mainContainer.classList.add('active');
+
+  displayTransactions(account1.movements);
+});
+
+function displayTransactions(allTransactions) {
+  allTransactions.forEach((trans, i) => {
+    const transactionType = trans > 0 ? 'deposit' : 'withdrawal';
+
+    const transactionHTML = `
+      <div class='transaction'>
+        <div>
+          <span class='transaction-type ${transactionType}'>${
+      i + 1
+    } ${transactionType}</span>
+          <span class='date'>12/03/2020</span>
+        </div>
+        <span class='transaction-amount'>${trans}</span>
+      </div>
+    `;
+
+    allTransactionsContainer.insertAdjacentHTML('afterbegin', transactionHTML);
+  });
+}

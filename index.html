@@ -25,7 +25,7 @@
       <div class="form-control__login">
         <input id="username" type="text" placeholder="USER" maxlength="2">
         <input id="pin" type="text" placeholder="PIN" maxlength="4">
-        <button id="btn__signin">
+        <button id="btn__signin" type="button">
           &rarr;
         </button>
       </div>
@@ -45,177 +45,69 @@
       </div>
     </section>
 
-    <!-- Transactions -->
-    <section id="customer-transactions-container">
-      <div class="transaction">
-        <div>
-          <span class="transaction-type">
-            8 Deposit
-          </span>
+    <div class="transactions-and-operations">
+      <!-- Transactions -->
+      <section id="customer-transactions-container"></section>
 
-          <span class="date">
-            12/03/2020
-          </span>
-        </div>
+      <!-- Operations -->
+      <section id="customer-operations-container">
+        <!-- Transfer Operation -->
+        <div class="operation transfer">
+          <h2>Transfer money</h2>
 
-        <span class="transaction-amount">
-          1300,00 €
-        </span>
-      </div>
-
-      <div class="transaction">
-        <div>
-          <span class="transaction-type">
-            8 Deposit
-          </span>
-
-          <span class="date">
-            12/03/2020
-          </span>
-        </div>
-
-        <span class="transaction-amount">
-          1300,00 €
-        </span>
-      </div>
-
-      <div class="transaction">
-        <div>
-          <span class="transaction-type">
-            8 Deposit
-          </span>
-
-          <span class="date">
-            12/03/2020
-          </span>
-        </div>
-
-        <span class="transaction-amount">
-          1300,00 €
-        </span>
-      </div>
-
-      <div class="transaction">
-        <div>
-          <span class="transaction-type">
-            8 Deposit
-          </span>
-
-          <span class="date">
-            12/03/2020
-          </span>
-        </div>
-
-        <span class="transaction-amount">
-          1300,00 €
-        </span>
-      </div>
-
-      <div class="transaction">
-        <div>
-          <span class="transaction-type">
-            8 Deposit
-          </span>
-
-          <span class="date">
-            12/03/2020
-          </span>
-        </div>
-
-        <span class="transaction-amount">
-          1300,00 €
-        </span>
-      </div>
-
-      <div class="transaction">
-        <div>
-          <span class="transaction-type">
-            8 Deposit
-          </span>
-
-          <span class="date">
-            12/03/2020
-          </span>
-        </div>
-
-        <span class="transaction-amount">
-          1300,00 €
-        </span>
-      </div>
-
-      <div class="transaction">
-        <div>
-          <span class="transaction-type">
-            8 Deposit
-          </span>
-
-          <span class="date">
-            12/03/2020
-          </span>
-        </div>
-
-        <span class="transaction-amount">
-          1300,00 €
-        </span>
-      </div>
-    </section>
-
-    <!-- Operations -->
-    <section id="customer-operations-container">
-      <!-- Transfer Operation -->
-      <div class="operation transfer">
-        <h2>Transfer money</h2>
-
-        <div class="form-control__operation">
-          <div>
-            <input id="recipient" type="text" placeholder="">
-            <label for="recipient">Transfer to</label>
+          <div class="form-control__operation">
+            <div>
+              <input id="recipient" type="text" placeholder="">
+              <label for="recipient">Transfer to</label>
+            </div>
+            <div>
+              <input id="amount" type="text" placeholder="">
+              <label for="amount">Amount</label>
+            </div>
+            <button id="btn__send">
+              &rarr;
+            </button>
           </div>
-          <div>
-            <input id="amount" type="text" placeholder="">
-            <label for="amount">Amount</label>
-          </div>
-          <button id="btn__send">
-            &rarr;
-          </button>
         </div>
-      </div>
 
-      <!-- Loan Operation -->
-      <div class="operation loan-request">
-        <h2>Request Loan</h2>
+        <!-- Loan Operation -->
+        <div class="operation loan-request">
+          <h2>Request Loan</h2>
 
-        <div class="form-control__operation">
-          <div>
-            <input id="amount" type="text" placeholder="">
-            <label for="amount">Amount</label>
+          <div class="form-control__operation">
+            <div>
+              <input id="amount" type="text" placeholder="">
+              <label for="amount">Amount</label>
+            </div>
+            <button id="btn__send">
+              &rarr;
+            </button>
           </div>
-          <button id="btn__send">
-            &rarr;
-          </button>
         </div>
-      </div>
 
-      <!-- Close Operation -->
-      <div class="operation account-closure">
-        <h2>Close Account</h2>
+        <!-- Close Operation -->
+        <div class="operation account-closure">
+          <h2>Close Account</h2>
 
-        <div class="form-control__operation">
-          <div>
-            <input id="username-confirm" type="text" placeholder="">
-            <label for="username-confirm">Confirm User</label>
+          <div class="form-control__operation">
+            <div>
+              <input id="username-confirm" type="text" placeholder="">
+              <label for="username-confirm">Confirm User</label>
+            </div>
+            <div>
+              <input id="pin-confirm" type="text" placeholder="">
+              <label for="pin-confirm">Confirm PIN</label>
+            </div>
+            <button id="btn__send">
+              &rarr;
+            </button>
           </div>
-          <div>
-            <input id="pin-confirm" type="text" placeholder="">
-            <label for="pin-confirm">Confirm PIN</label>
-          </div>
-          <button id="btn__send">
-            &rarr;
-          </button>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
+
+  <script src="js/script.js"></script>
 </body>
 
 </html>

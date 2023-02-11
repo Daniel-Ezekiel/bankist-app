@@ -71,12 +71,20 @@ input {
 
 /* MAIN */
 main {
+  display: none;
   width: 100%;
+}
+
+main.active {
+  display: block;
+  transition: all 1s;
+}
+
+.transactions-and-operations {
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-
-  transition: all 1s;
+  gap: 2.5rem;
 }
 
 /* USER ACCOUNT INFORMATION */
@@ -103,9 +111,10 @@ main {
 
 /* TRANSACTIONS */
 #customer-transactions-container {
+  max-height: 50rem;
+  overflow: scroll;
   border-radius: 1.5rem;
   background-color: #fff;
-  /* width: 100%; */
 }
 
 .transaction {
@@ -127,7 +136,16 @@ main {
 .transaction-type {
   padding: 0.5rem 1.2rem;
   border-radius: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fff;
+}
+
+.deposit {
   background-image: linear-gradient(to top left, #39b385, #9be15d);
+}
+.withdrawal {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
 
 .transaction-amount {
@@ -136,6 +154,8 @@ main {
 
 /* OPERATIONS */
 #customer-operations-container {
+  max-height: 50rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -199,17 +219,11 @@ main {
 
   #customer-operations-container {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
   }
 }
 
 @media screen and (min-width: 768px) {
-  main {
-    flex-flow: row wrap;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
   #user-account-details {
     margin-bottom: 2rem;
     width: 100%;
@@ -223,12 +237,17 @@ main {
     font-size: 3rem;
   }
 
+  .transactions-and-operations {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
   #customer-transactions-container {
-    width: 65.5%;
+    width: 65%;
   }
 
   #customer-operations-container {
-    width: 33%;
+    width: 40%;
   }
 }
 
