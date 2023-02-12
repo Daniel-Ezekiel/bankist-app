@@ -120,7 +120,7 @@ createUsernames(accounts);
 btnSignin.addEventListener('click', function () {
   allTransactionsContainer.innerHTML = '';
 
-  let username = document.querySelector('#username').value.toLowerCase();
+  let username = document.querySelector('#username').value.trim().toLowerCase();
   let pin = Number(document.querySelector('#pin').value);
 
   const currentUser = accounts.filter(
