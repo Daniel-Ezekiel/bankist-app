@@ -7,10 +7,12 @@
 // DOM ELEMENTS
 const btnSignin = document.querySelector('#btn__signin');
 const mainContainer = document.querySelector('main');
-const labelBalance = document.querySelector('.balance');
 const allTransactionsContainer = document.querySelector(
   '#customer-transactions-container'
 );
+
+const labelWelcome = document.querySelector('.welcome-message');
+const labelBalance = document.querySelector('.balance');
 const labelDeposits = document.querySelector('.deposits');
 const labelWithdrawals = document.querySelector('.withdrawals');
 const labelInterest = document.querySelector('.interest');
@@ -118,24 +120,18 @@ createUsernames(accounts);
 btnSignin.addEventListener('click', function () {
   allTransactionsContainer.innerHTML = '';
 
-  const usernameInput = document.querySelector('#username');
-  const userPinInput = document.querySelector('#pin');
-
-  let username = usernameInput.value.toLowerCase();
-  let pin = Number(userPinInput.value);
+  let username = document.querySelector('#username').value.toLowerCase();
+  let pin = Number(document.querySelector('#pin').value);
 
   const currentUser = accounts.filter(
     account => account.username === username && account.pin === pin
   )[0];
 
   if (currentUser) {
+    labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}`;
     mainContainer.classList.add('active');
     computeDisplayBalance(currentUser.movements);
     displayTransactions(currentUser.movements);
     displaySummary(currentUser.movements);
   }
-  console.log(currentUser);
-
-  // username.toLowerCase() === 'js' &&
-  //   Number(pin) === 1111 &&
 });
