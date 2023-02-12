@@ -52,7 +52,7 @@ const computeDisplayBalance = function (allTransactions) {
   const balance = allTransactions.reduce((acc, c) => acc + c, 0);
   labelBalance.textContent = `${balance} €`;
 };
-computeDisplayBalance(account1.movements);
+// computeDisplayBalance(account1.movements);
 
 function displayTransactions(allTransactions) {
   allTransactions.forEach((trans, i) => {
@@ -74,7 +74,7 @@ function displayTransactions(allTransactions) {
     allTransactionsContainer.insertAdjacentHTML('afterbegin', transactionHTML);
   });
 }
-displayTransactions(account1.movements);
+// displayTransactions(account1.movements);
 
 const displaySummary = function (allTransactions) {
   const deposits = allTransactions
@@ -96,7 +96,7 @@ const displaySummary = function (allTransactions) {
 
   console.log(deposits, withdrawals, interest);
 };
-displaySummary(account1.movements);
+// displaySummary(account1.movements);
 
 // Create account username
 const createUsernames = function (accs) {
@@ -111,6 +111,9 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 
 /**********
+
+
+***********************/
 // USER SIGN IN
 btnSignin.addEventListener('click', function () {
   allTransactionsContainer.innerHTML = '';
@@ -118,12 +121,21 @@ btnSignin.addEventListener('click', function () {
   const usernameInput = document.querySelector('#username');
   const userPinInput = document.querySelector('#pin');
 
-  let username = usernameInput.value;
-  let pin = userPinInput.value;
+  let username = usernameInput.value.toLowerCase();
+  let pin = Number(userPinInput.value);
 
-  username.toLowerCase() === 'js' &&
-    Number(pin) === 1111 &&
+  const currentUser = accounts.filter(
+    account => account.username === username && account.pin === pin
+  )[0];
+
+  if (currentUser) {
     mainContainer.classList.add('active');
-});
+    computeDisplayBalance(currentUser.movements);
+    displayTransactions(currentUser.movements);
+    displaySummary(currentUser.movements);
+  }
+  console.log(currentUser);
 
-***********************/
+  // username.toLowerCase() === 'js' &&
+  //   Number(pin) === 1111 &&
+});
