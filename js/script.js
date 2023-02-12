@@ -11,6 +11,9 @@ const labelBalance = document.querySelector('.balance');
 const allTransactionsContainer = document.querySelector(
   '#customer-transactions-container'
 );
+const labelDeposits = document.querySelector('.deposits');
+const labelWithdrawals = document.querySelector('.withdrawals');
+const labelInterest = document.querySelector('.interest');
 
 // Data
 const account1 = {
@@ -51,18 +54,6 @@ const computeDisplayBalance = function (allTransactions) {
 };
 computeDisplayBalance(account1.movements);
 
-// Create account username
-const createUsernames = function (accs) {
-  accs.forEach(acc => {
-    acc.username = acc.owner
-      .toLowerCase()
-      .split(' ')
-      .map(name => name[0])
-      .join('');
-  });
-};
-createUsernames(accounts);
-
 function displayTransactions(allTransactions) {
   allTransactions.forEach((trans, i) => {
     const transactionType = trans > 0 ? 'deposit' : 'withdrawal';
@@ -84,6 +75,40 @@ function displayTransactions(allTransactions) {
   });
 }
 displayTransactions(account1.movements);
+
+const displaySummary = function (allTransactions) {
+  const deposits = allTransactions
+    .filter(trans => trans > 0)
+    .reduce((acc, c) => acc + c, 0);
+  labelDeposits.textContent = `${deposits} €`;
+
+  const withdrawals = allTransactions
+    .filter(trans => trans < 0)
+    .reduce((acc, c) => acc + c, 0);
+  labelWithdrawals.textContent = `${Math.abs(withdrawals)} €`;
+
+  const interest = allTransactions
+    .filter(trans => trans > 0)
+    .map(deposit => deposit * 0.012)
+    .filter(interest => interest >= 1)
+    .reduce((acc, c) => acc + c, 0);
+  labelInterest.textContent = `${interest} €`;
+
+  console.log(deposits, withdrawals, interest);
+};
+displaySummary(account1.movements);
+
+// Create account username
+const createUsernames = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
 
 /**********
 // USER SIGN IN
