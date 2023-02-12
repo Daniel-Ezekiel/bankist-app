@@ -128,7 +128,7 @@ btnSignin.addEventListener('click', function () {
   )[0];
 
   if (currentUser) {
-    labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}`;
+    labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}!`;
     mainContainer.classList.add('active');
     computeDisplayBalance(currentUser.movements);
     displayTransactions(currentUser.movements);
