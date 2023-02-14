@@ -142,6 +142,31 @@ btnSignin.addEventListener('click', function () {
   }
 });
 
+// TRANSFER FUNDS
+const btnTransfer = document.querySelector('#btn_transfer');
+btnTransfer.addEventListener('click', function () {
+  const recipientUsername = document
+    .querySelector('#recipient')
+    .value.toLowerCase();
+  const recipientAmount = Number(
+    document.querySelector('#transfer-amount').value
+  );
+
+  const recipientAcc = accounts.find(
+    account => account.username === recipientUsername
+  );
+  // console.log(recipientAccount);
+
+  if (recipientAcc !== loggedInUser) {
+    recipientAcc.movements.push(recipientAmount);
+    loggedInUser.movements.push(-recipientAmount);
+
+    computeDisplayBalance(loggedInUser.movements);
+    displayTransactions(loggedInUser.movements);
+    displaySummary(loggedInUser.movements);
+  }
+});
+
 // LOAN REQUEST
 const btnLoan = document.querySelector('#btn_loan');
 btnLoan.addEventListener('click', function () {
@@ -153,4 +178,22 @@ btnLoan.addEventListener('click', function () {
   displayTransactions(loggedInUser.movements);
   displaySummary(loggedInUser.movements);
   console.log(loggedInUser);
+});
+
+// CLOSE ACCOUNT
+const btnCloseAcc = document.querySelector('#btn_close-acc');
+btnCloseAcc.addEventListener('click', function () {
+  const usernameConfirm = document
+    .querySelector('#username-confirm')
+    .value.toLowerCase();
+  const pinConfirm = Number(document.querySelector('#pin-confirm').value);
+
+  const accToClose = accounts.findIndex(
+    account =>
+      account.username === usernameConfirm && account.pin === pinConfirm
+  );
+
+  accounts.splice(accToClose, 1);
+  labelWelcome.textContent = 'Login to get started';
+  mainContainer.classList.remove('active');
 });
