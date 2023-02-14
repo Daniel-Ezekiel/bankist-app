@@ -195,7 +195,9 @@ btnCloseAcc.addEventListener('click', function () {
       account.username === usernameConfirm && account.pin === pinConfirm
   );
 
-  accounts.splice(accToClose, 1);
-  labelWelcome.textContent = 'Login to get started';
-  mainContainer.classList.remove('active');
+  if (loggedInUser.username === accounts[accToClose].username) {
+    accounts.splice(accToClose, 1);
+    labelWelcome.textContent = 'Login to get started';
+    mainContainer.classList.remove('active');
+  }
 });
