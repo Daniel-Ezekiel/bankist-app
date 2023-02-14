@@ -53,6 +53,7 @@ const accounts = [account1, account2, account3, account4];
 const computeDisplayBalance = function (allTransactions) {
   const balance = allTransactions.reduce((acc, c) => acc + c, 0);
   labelBalance.textContent = `${balance} €`;
+  return balance;
 };
 // computeDisplayBalance(account1.movements);
 
@@ -155,9 +156,10 @@ btnTransfer.addEventListener('click', function () {
   const recipientAcc = accounts.find(
     account => account.username === recipientUsername
   );
-  // console.log(recipientAccount);
 
-  if (recipientAcc !== loggedInUser) {
+  const currentUserBalance = computeDisplayBalance(loggedInUser.movements);
+
+  if (recipientAcc !== loggedInUser && recipientAmount < currentUserBalance) {
     recipientAcc.movements.push(recipientAmount);
     loggedInUser.movements.push(-recipientAmount);
 
