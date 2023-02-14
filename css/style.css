@@ -63,7 +63,7 @@ input {
 }
 
 #btn__signin,
-#btn__send {
+.btn__send {
   outline: none;
   appearance: none;
   background-color: transparent;
@@ -212,8 +212,8 @@ main.active {
   background-color: rgba(255, 255, 255, 0.4);
 }
 
-#btn__send {
-  align-self: flex-start;
+.btn__send {
+  align-self: stretch;
   margin: 0;
   padding: 0.45rem 1rem;
   border-radius: 0.8rem;

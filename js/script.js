@@ -116,6 +116,8 @@ createUsernames(accounts);
 
 
 ***********************/
+let loggedInUser;
+
 // USER SIGN IN
 btnSignin.addEventListener('click', function () {
   allTransactionsContainer.innerHTML = '';
@@ -123,9 +125,10 @@ btnSignin.addEventListener('click', function () {
   let username = document.querySelector('#username').value.trim().toLowerCase();
   let pin = Number(document.querySelector('#pin').value);
 
-  const currentUser = accounts.filter(
+  let currentUser = accounts.filter(
     account => account.username === username && account.pin === pin
   )[0];
+  loggedInUser = currentUser;
 
   if (currentUser) {
     labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}!`;
@@ -134,4 +137,16 @@ btnSignin.addEventListener('click', function () {
     displayTransactions(currentUser.movements);
     displaySummary(currentUser.movements);
   }
+});
+
+// LOAN REQUEST
+const btnLoan = document.querySelector('#btn_loan');
+btnLoan.addEventListener('click', function () {
+  const loanAmount = Number(document.querySelector('#loan-amount').value);
+
+  loggedInUser.movements.push(loanAmount);
+  computeDisplayBalance(loggedInUser.movements);
+  displayTransactions(loggedInUser.movements);
+  displaySummary(loggedInUser.movements);
+  console.log(loggedInUser);
 });
