@@ -125,17 +125,20 @@ btnSignin.addEventListener('click', function () {
   let username = document.querySelector('#username').value.trim().toLowerCase();
   let pin = Number(document.querySelector('#pin').value);
 
-  let currentUser = accounts.filter(
+  let currentUser = accounts.find(
     account => account.username === username && account.pin === pin
-  )[0];
+  );
   loggedInUser = currentUser;
 
   if (currentUser) {
     labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}!`;
-    mainContainer.classList.add('active');
     computeDisplayBalance(currentUser.movements);
     displayTransactions(currentUser.movements);
     displaySummary(currentUser.movements);
+    mainContainer.classList.add('active');
+  } else {
+    labelWelcome.textContent = `Enter correct login details`;
+    mainContainer.classList.remove('active');
   }
 });
 
@@ -143,8 +146,9 @@ btnSignin.addEventListener('click', function () {
 const btnLoan = document.querySelector('#btn_loan');
 btnLoan.addEventListener('click', function () {
   const loanAmount = Number(document.querySelector('#loan-amount').value);
+  console.log(loggedInUser);
 
-  loggedInUser.movements.push(loanAmount);
+  if (loanAmount) loggedInUser.movements.push(loanAmount);
   computeDisplayBalance(loggedInUser.movements);
   displayTransactions(loggedInUser.movements);
   displaySummary(loggedInUser.movements);
