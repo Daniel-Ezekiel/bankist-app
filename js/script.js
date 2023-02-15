@@ -199,13 +199,11 @@ btnLoan.addEventListener('click', function (e) {
 btnCloseAcc.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const accToClose = accounts.findIndex(
-    account =>
-      account.username === usernameConfirm.value.toLowerCase() &&
-      account.pin === Number(pinConfirm.value)
-  );
-
-  if (currentUser.username === accounts[accToClose].username) {
+  if (
+    currentUser.username === usernameConfirm.value.toLowerCase() &&
+    currentUser.pin === Number(pinConfirm.value)
+  ) {
+    const accToClose = accounts.indexOf(currentUser);
     accounts.splice(accToClose, 1);
     labelWelcome.textContent = 'Login to get started';
     mainContainer.classList.remove('active');
