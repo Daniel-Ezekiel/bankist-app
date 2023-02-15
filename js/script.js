@@ -120,7 +120,8 @@ createUsernames(accounts);
 let loggedInUser;
 
 // USER SIGN IN
-btnSignin.addEventListener('click', function () {
+btnSignin.addEventListener('click', function (e) {
+  e.preventDefault();
   allTransactionsContainer.innerHTML = '';
 
   let username = document.querySelector('#username').value.trim().toLowerCase();
@@ -145,7 +146,9 @@ btnSignin.addEventListener('click', function () {
 
 // TRANSFER FUNDS
 const btnTransfer = document.querySelector('#btn_transfer');
-btnTransfer.addEventListener('click', function () {
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+
   const recipientUsername = document
     .querySelector('#recipient')
     .value.toLowerCase();
@@ -171,7 +174,9 @@ btnTransfer.addEventListener('click', function () {
 
 // LOAN REQUEST
 const btnLoan = document.querySelector('#btn_loan');
-btnLoan.addEventListener('click', function () {
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
   const loanAmount = Number(document.querySelector('#loan-amount').value);
   console.log(loggedInUser);
 
@@ -184,7 +189,9 @@ btnLoan.addEventListener('click', function () {
 
 // CLOSE ACCOUNT
 const btnCloseAcc = document.querySelector('#btn_close-acc');
-btnCloseAcc.addEventListener('click', function () {
+btnCloseAcc.addEventListener('click', function (e) {
+  e.preventDefault();
+
   const usernameConfirm = document
     .querySelector('#username-confirm')
     .value.toLowerCase();

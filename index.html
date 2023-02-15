@@ -22,13 +22,13 @@
 
       <img src="./img/logo.png" alt="logo" class="logo">
 
-      <div class="form-control__login">
+      <form class="form-control__login">
         <input id="username" type="text" placeholder="USER">
         <input id="pin" type="text" placeholder="PIN" maxlength="4">
-        <button id="btn__signin" type="button">
+        <button id="btn__signin">
           &rarr;
         </button>
-      </div>
+      </form>
     </nav>
   </header>
 
@@ -55,7 +55,7 @@
         <div class="operation transfer">
           <h2>Transfer money</h2>
 
-          <div class="form-control__operation">
+          <form class="form-control__operation">
             <div>
               <input id="recipient" type="text" placeholder="">
               <label for="recipient">Transfer to</label>
@@ -67,11 +67,11 @@
             <button id="btn_transfer" class="btn__send">
               &rarr;
             </button>
-          </div>
+          </form>
         </div>
 
         <!-- Loan Operation -->
-        <div class="operation loan-request">
+        <form class="operation loan-request">
           <h2>Request Loan</h2>
 
           <div class="form-control__operation">
@@ -83,10 +83,10 @@
               &rarr;
             </button>
           </div>
-        </div>
+        </form>
 
         <!-- Close Operation -->
-        <div class="operation account-closure">
+        <form class="operation account-closure">
           <h2>Close Account</h2>
 
           <div class="form-control__operation">
@@ -102,7 +102,7 @@
               &rarr;
             </button>
           </div>
-        </div>
+        </form>
       </section>
     </div>
 
