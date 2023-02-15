@@ -63,13 +63,13 @@ const accounts = [account1, account2, account3, account4];
 
 /***************************************/
 //Compute and Display balance
-const computeDisplayBalance = function (allTransactions) {
-  const balance = allTransactions.reduce((acc, c) => acc + c, 0);
-  labelBalance.textContent = `${balance} €`;
-  return balance;
+const computeDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, c) => acc + c, 0);
+  labelBalance.textContent = `${acc.balance} €`;
+  // return balance;
 };
 //  Compute and Display all Transactions
-function displayTransactions(allTransactions) {
+const displayTransactions = function (allTransactions) {
   allTransactions.forEach((trans, i) => {
     const transactionType = trans > 0 ? 'deposit' : 'withdrawal';
 
@@ -88,27 +88,31 @@ function displayTransactions(allTransactions) {
 
     allTransactionsContainer.insertAdjacentHTML('afterbegin', transactionHTML);
   });
-}
+};
 // Compute and Display account summary
-const displaySummary = function (userAcc) {
-  const deposits = userAcc.movements
+const displaySummary = function (acc) {
+  const deposits = acc.movements
     .filter(trans => trans > 0)
     .reduce((acc, c) => acc + c, 0);
   labelDeposits.textContent = `${deposits} €`;
 
-  const withdrawals = userAcc.movements
+  const withdrawals = acc.movements
     .filter(trans => trans < 0)
     .reduce((acc, c) => acc + c, 0);
   labelWithdrawals.textContent = `${Math.abs(withdrawals)} €`;
 
-  const interest = userAcc.movements
+  const interest = acc.movements
     .filter(trans => trans > 0)
-    .map(deposit => deposit * (userAcc.interestRate / 100))
+    .map(deposit => deposit * (acc.interestRate / 100))
     .filter(interest => interest >= 1)
     .reduce((acc, c) => acc + c, 0);
   labelInterest.textContent = `${interest} €`;
+};
 
-  console.log(deposits, withdrawals, interest);
+const updateUI = function (acc) {
+  computeDisplayBalance(acc);
+  displayTransactions(acc.movements);
+  displaySummary(acc);
 };
 
 // Create account username
@@ -139,9 +143,8 @@ btnSignin.addEventListener('click', function (e) {
 
   if (currentUser?.pin === pin) {
     labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}!`;
-    computeDisplayBalance(currentUser.movements);
-    displayTransactions(currentUser.movements);
-    displaySummary(currentUser);
+
+    updateUI(currentUser);
     mainContainer.classList.add('active');
   } else {
     labelWelcome.textContent = `Enter correct login details`;
@@ -149,8 +152,7 @@ btnSignin.addEventListener('click', function (e) {
   }
 
   // Clear form fields
-  usernameLogin.value = '';
-  pinLogin.value = '';
+  usernameLogin.value = pinLogin.value = '';
   pinLogin.blur();
 });
 
@@ -162,21 +164,20 @@ btnTransfer.addEventListener('click', function (e) {
     account => account.username === recipientUsername.value.toLowerCase()
   );
 
-  const currentUserBalance = computeDisplayBalance(currentUser.movements);
-
   const recipientAmt = Number(recipientAmount.value);
-  if (recipientAcc !== currentUser && recipientAmt < currentUserBalance) {
+  if (
+    recipientAmt &&
+    recipientAcc !== currentUser &&
+    recipientAmt <= currentUser.balance
+  ) {
     recipientAcc.movements.push(recipientAmt);
     currentUser.movements.push(-recipientAmt);
 
-    computeDisplayBalance(currentUser.movements);
-    displayTransactions(currentUser.movements);
-    displaySummary(currentUser);
+    updateUI(currentUser);
   }
 
   // Clear form fields
-  recipientUsername.value = '';
-  recipientAmount.value = '';
+  recipientUsername.value = recipientAmount.value = '';
   recipientAmount.blur();
 });
 
@@ -188,10 +189,7 @@ btnLoan.addEventListener('click', function (e) {
   console.log(currentUser);
 
   if (loanAmt) currentUser.movements.push(loanAmt);
-  computeDisplayBalance(currentUser.movements);
-  displayTransactions(currentUser.movements);
-  displaySummary(currentUser);
-  console.log(currentUser);
+  updateUI(currentUser);
 
   loanAmount.value = '';
   loanAmount.blur();
@@ -214,8 +212,7 @@ btnCloseAcc.addEventListener('click', function (e) {
   }
 
   // Clear form fields
-  usernameConfirm.value = '';
-  pinConfirm.value = '';
+  usernameConfirm.value = pinConfirm.value = '';
   pinConfirm.blur();
 });
 
