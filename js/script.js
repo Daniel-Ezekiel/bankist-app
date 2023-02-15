@@ -201,3 +201,19 @@ btnCloseAcc.addEventListener('click', function () {
     mainContainer.classList.remove('active');
   }
 });
+
+// SORT TRANSACTIONS
+let sorted = false;
+const btnSort = document.querySelector('#btn__sort');
+btnSort.addEventListener('click', function () {
+  allTransactionsContainer.innerHTML = '';
+
+  const transactionsCopy = loggedInUser.movements.slice();
+  if (!sorted) {
+    displayTransactions(transactionsCopy.sort((a, z) => a - z));
+    sorted = true;
+  } else {
+    displayTransactions(loggedInUser.movements);
+    sorted = false;
+  }
+});

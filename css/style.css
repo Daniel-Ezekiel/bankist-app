@@ -230,10 +230,16 @@ main.active {
 
 .summary {
   display: flex;
+  justify-content: space-between;
   gap: 1.5rem;
 }
 
-.summary > p {
+.summary-labels {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.summary-labels > p {
   text-transform: uppercase;
 }
 
@@ -251,6 +257,15 @@ main.active {
 
 .interest {
   color: #39b385;
+}
+
+#btn__sort {
+  background-color: none;
+  outline: 0;
+  border: none;
+  text-transform: uppercase;
+  font-family: 'Raleway', sans-serif;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 540px) {
