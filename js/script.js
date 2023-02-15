@@ -11,11 +11,24 @@ const allTransactionsContainer = document.querySelector(
   '#customer-transactions-container'
 );
 
+const btnTransfer = document.querySelector('#btn_transfer');
+const btnLoan = document.querySelector('#btn_loan');
+const btnCloseAcc = document.querySelector('#btn_close-acc');
+const btnSort = document.querySelector('#btn__sort');
+
 const labelWelcome = document.querySelector('.welcome-message');
 const labelBalance = document.querySelector('.balance');
 const labelDeposits = document.querySelector('.deposits');
 const labelWithdrawals = document.querySelector('.withdrawals');
 const labelInterest = document.querySelector('.interest');
+
+const usernameLogin = document.querySelector('#username');
+const pinLogin = document.querySelector('#pin');
+const recipientUsername = document.querySelector('#recipient');
+const recipientAmount = document.querySelector('#transfer-amount');
+const loanAmount = document.querySelector('#loan-amount');
+const usernameConfirm = document.querySelector('#username-confirm');
+const pinConfirm = document.querySelector('#pin-confirm');
 
 // Data
 const account1 = {
@@ -55,8 +68,7 @@ const computeDisplayBalance = function (allTransactions) {
   labelBalance.textContent = `${balance} €`;
   return balance;
 };
-// computeDisplayBalance(account1.movements);
-
+//  Compute and Display all Transactions
 function displayTransactions(allTransactions) {
   allTransactions.forEach((trans, i) => {
     const transactionType = trans > 0 ? 'deposit' : 'withdrawal';
@@ -77,29 +89,27 @@ function displayTransactions(allTransactions) {
     allTransactionsContainer.insertAdjacentHTML('afterbegin', transactionHTML);
   });
 }
-// displayTransactions(account1.movements);
-
-const displaySummary = function (allTransactions) {
-  const deposits = allTransactions
+// Compute and Display account summary
+const displaySummary = function (userAcc) {
+  const deposits = userAcc.movements
     .filter(trans => trans > 0)
     .reduce((acc, c) => acc + c, 0);
   labelDeposits.textContent = `${deposits} €`;
 
-  const withdrawals = allTransactions
+  const withdrawals = userAcc.movements
     .filter(trans => trans < 0)
     .reduce((acc, c) => acc + c, 0);
   labelWithdrawals.textContent = `${Math.abs(withdrawals)} €`;
 
-  const interest = allTransactions
+  const interest = userAcc.movements
     .filter(trans => trans > 0)
-    .map(deposit => deposit * 0.012)
+    .map(deposit => deposit * (userAcc.interestRate / 100))
     .filter(interest => interest >= 1)
     .reduce((acc, c) => acc + c, 0);
   labelInterest.textContent = `${interest} €`;
 
   console.log(deposits, withdrawals, interest);
 };
-// displaySummary(account1.movements);
 
 // Create account username
 const createUsernames = function (accs) {
@@ -113,114 +123,113 @@ const createUsernames = function (accs) {
 };
 createUsernames(accounts);
 
-/**********
-
-
-***********************/
-let loggedInUser;
+/************************/
+let currentUser;
 
 // USER SIGN IN
 btnSignin.addEventListener('click', function (e) {
   e.preventDefault();
   allTransactionsContainer.innerHTML = '';
 
-  let username = document.querySelector('#username').value.trim().toLowerCase();
-  let pin = Number(document.querySelector('#pin').value);
+  let username = usernameLogin.value.toLowerCase().trim();
+  let pin = Number(pinLogin.value);
 
-  let currentUser = accounts.find(
-    account => account.username === username && account.pin === pin
-  );
-  loggedInUser = currentUser;
+  currentUser = accounts.find(account => account.username === username);
+  console.log(currentUser);
 
-  if (currentUser) {
+  if (currentUser?.pin === pin) {
     labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}!`;
     computeDisplayBalance(currentUser.movements);
     displayTransactions(currentUser.movements);
-    displaySummary(currentUser.movements);
+    displaySummary(currentUser);
     mainContainer.classList.add('active');
   } else {
     labelWelcome.textContent = `Enter correct login details`;
     mainContainer.classList.remove('active');
   }
+
+  // Clear form fields
+  usernameLogin.value = '';
+  pinLogin.value = '';
+  pinLogin.blur();
 });
 
 // TRANSFER FUNDS
-const btnTransfer = document.querySelector('#btn_transfer');
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const recipientUsername = document
-    .querySelector('#recipient')
-    .value.toLowerCase();
-  const recipientAmount = Number(
-    document.querySelector('#transfer-amount').value
-  );
-
   const recipientAcc = accounts.find(
-    account => account.username === recipientUsername
+    account => account.username === recipientUsername.value.toLowerCase()
   );
 
-  const currentUserBalance = computeDisplayBalance(loggedInUser.movements);
+  const currentUserBalance = computeDisplayBalance(currentUser.movements);
 
-  if (recipientAcc !== loggedInUser && recipientAmount < currentUserBalance) {
-    recipientAcc.movements.push(recipientAmount);
-    loggedInUser.movements.push(-recipientAmount);
+  const recipientAmt = Number(recipientAmount.value);
+  if (recipientAcc !== currentUser && recipientAmt < currentUserBalance) {
+    recipientAcc.movements.push(recipientAmt);
+    currentUser.movements.push(-recipientAmt);
 
-    computeDisplayBalance(loggedInUser.movements);
-    displayTransactions(loggedInUser.movements);
-    displaySummary(loggedInUser.movements);
+    computeDisplayBalance(currentUser.movements);
+    displayTransactions(currentUser.movements);
+    displaySummary(currentUser);
   }
+
+  // Clear form fields
+  recipientUsername.value = '';
+  recipientAmount.value = '';
+  recipientAmount.blur();
 });
 
 // LOAN REQUEST
-const btnLoan = document.querySelector('#btn_loan');
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const loanAmount = Number(document.querySelector('#loan-amount').value);
-  console.log(loggedInUser);
+  const loanAmt = Number(loanAmount.value);
+  console.log(currentUser);
 
-  if (loanAmount) loggedInUser.movements.push(loanAmount);
-  computeDisplayBalance(loggedInUser.movements);
-  displayTransactions(loggedInUser.movements);
-  displaySummary(loggedInUser.movements);
-  console.log(loggedInUser);
+  if (loanAmt) currentUser.movements.push(loanAmt);
+  computeDisplayBalance(currentUser.movements);
+  displayTransactions(currentUser.movements);
+  displaySummary(currentUser);
+  console.log(currentUser);
+
+  loanAmount.value = '';
+  loanAmount.blur();
 });
 
 // CLOSE ACCOUNT
-const btnCloseAcc = document.querySelector('#btn_close-acc');
 btnCloseAcc.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const usernameConfirm = document
-    .querySelector('#username-confirm')
-    .value.toLowerCase();
-  const pinConfirm = Number(document.querySelector('#pin-confirm').value);
-
   const accToClose = accounts.findIndex(
     account =>
-      account.username === usernameConfirm && account.pin === pinConfirm
+      account.username === usernameConfirm.value.toLowerCase() &&
+      account.pin === Number(pinConfirm.value)
   );
 
-  if (loggedInUser.username === accounts[accToClose].username) {
+  if (currentUser.username === accounts[accToClose].username) {
     accounts.splice(accToClose, 1);
     labelWelcome.textContent = 'Login to get started';
     mainContainer.classList.remove('active');
   }
+
+  // Clear form fields
+  usernameConfirm.value = '';
+  pinConfirm.value = '';
+  pinConfirm.blur();
 });
 
 // SORT TRANSACTIONS
 let sorted = false;
-const btnSort = document.querySelector('#btn__sort');
 btnSort.addEventListener('click', function () {
   allTransactionsContainer.innerHTML = '';
 
-  const transactionsCopy = loggedInUser.movements.slice();
+  const transactionsCopy = currentUser.movements.slice();
   if (!sorted) {
     displayTransactions(transactionsCopy.sort((a, z) => a - z));
     sorted = true;
   } else {
-    displayTransactions(loggedInUser.movements);
+    displayTransactions(currentUser.movements);
     sorted = false;
   }
 });
