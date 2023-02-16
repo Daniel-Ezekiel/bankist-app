@@ -110,6 +110,8 @@ const displaySummary = function (acc) {
 };
 
 const updateUI = function (acc) {
+  allTransactionsContainer.innerHTML = '';
+
   computeDisplayBalance(acc);
   displayTransactions(acc.movements);
   displaySummary(acc);
@@ -133,7 +135,6 @@ let currentUser;
 // USER SIGN IN
 btnSignin.addEventListener('click', function (e) {
   e.preventDefault();
-  allTransactionsContainer.innerHTML = '';
 
   let username = usernameLogin.value.toLowerCase().trim();
   let pin = Number(pinLogin.value);
@@ -188,7 +189,10 @@ btnLoan.addEventListener('click', function (e) {
   const loanAmt = Number(loanAmount.value);
   console.log(currentUser);
 
-  if (loanAmt) currentUser.movements.push(loanAmt);
+  const userLoanStatus = currentUser.movements.some(
+    amt => amt >= loanAmt * 0.1
+  );
+  loanAmt && userLoanStatus && currentUser.movements.push(loanAmt);
   updateUI(currentUser);
 
   loanAmount.value = '';
