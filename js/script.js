@@ -69,8 +69,12 @@ const computeDisplayBalance = function (acc) {
   // return balance;
 };
 //  Compute and Display all Transactions
-const displayTransactions = function (allTransactions) {
-  allTransactions.forEach((trans, i) => {
+const displayTransactions = function (allTransactions, sort = false) {
+  const allTrans = sort
+    ? allTransactions.slice().sort((a, z) => a - z)
+    : allTransactions;
+
+  allTrans.forEach((trans, i) => {
     const transactionType = trans > 0 ? 'deposit' : 'withdrawal';
 
     const transactionHTML = `
@@ -223,12 +227,6 @@ let sorted = false;
 btnSort.addEventListener('click', function () {
   allTransactionsContainer.innerHTML = '';
 
-  const transactionsCopy = currentUser.movements.slice();
-  if (!sorted) {
-    displayTransactions(transactionsCopy.sort((a, z) => a - z));
-    sorted = true;
-  } else {
-    displayTransactions(currentUser.movements);
-    sorted = false;
-  }
+  displayTransactions(currentUser.movements, !sorted);
+  sorted = !sorted;
 });
