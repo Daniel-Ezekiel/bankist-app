@@ -26,7 +26,7 @@
 
       <form class="form-control__login">
         <input id="username" type="text" placeholder="USER">
-        <input id="pin" type="text" placeholder="PIN" maxlength="4">
+        <input id="pin" type="password" placeholder="PIN" maxlength="4">
         <button id="btn__signin">
           &rarr;
         </button>
@@ -63,7 +63,7 @@
               <label for="recipient">Transfer to</label>
             </div>
             <div>
-              <input id="transfer-amount" type="text" placeholder="">
+              <input id="transfer-amount" type="number" placeholder="">
               <label for="transfer-amount">Amount</label>
             </div>
             <button id="btn_transfer" class="btn__send">
@@ -73,38 +73,38 @@
         </div>
 
         <!-- Loan Operation -->
-        <form class="operation loan-request">
+        <div class="operation loan-request">
           <h2>Request Loan</h2>
 
-          <div class="form-control__operation">
+          <form class="form-control__operation">
             <div>
-              <input id="loan-amount" type="text" placeholder="">
+              <input id="loan-amount" type="number" placeholder="">
               <label for="loan-amount">Amount</label>
             </div>
             <button id="btn_loan" class="btn__send">
               &rarr;
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
 
         <!-- Close Operation -->
-        <form class="operation account-closure">
+        <div class="operation account-closure">
           <h2>Close Account</h2>
 
-          <div class="form-control__operation">
+          <form class="form-control__operation">
             <div>
               <input id="username-confirm" type="text" placeholder="">
               <label for="username-confirm">Confirm User</label>
             </div>
             <div>
-              <input id="pin-confirm" type="text" placeholder="">
+              <input id="pin-confirm" type="password" placeholder="">
               <label for="pin-confirm">Confirm PIN</label>
             </div>
             <button id="btn_close-acc" class="btn__send">
               &rarr;
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </section>
     </div>
 
