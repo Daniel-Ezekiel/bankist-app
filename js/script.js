@@ -1,7 +1,4 @@
 'use strict';
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
 // BANKIST APP
 
 // DOM ELEMENTS
@@ -65,7 +62,7 @@ const accounts = [account1, account2, account3, account4];
 //Compute and Display balance
 const computeDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, c) => acc + c, 0);
-  labelBalance.textContent = `${acc.balance} €`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)} €`;
   // return balance;
 };
 //  Compute and Display all Transactions
@@ -86,7 +83,7 @@ const displayTransactions = function (allTransactions, sort = false) {
         </span>
         <span class='date'>12/03/2020</span>
       </div>
-      <span class='transaction-amount'>${trans} €</span>
+      <span class='transaction-amount'>${trans.toFixed(2)} €</span>
     </div>
     `;
 
@@ -98,19 +95,19 @@ const displaySummary = function (acc) {
   const deposits = acc.movements
     .filter(trans => trans > 0)
     .reduce((acc, c) => acc + c, 0);
-  labelDeposits.textContent = `${deposits} €`;
+  labelDeposits.textContent = `${deposits.toFixed(2)} €`;
 
   const withdrawals = acc.movements
     .filter(trans => trans < 0)
     .reduce((acc, c) => acc + c, 0);
-  labelWithdrawals.textContent = `${Math.abs(withdrawals)} €`;
+  labelWithdrawals.textContent = `${Math.abs(withdrawals).toFixed(2)} €`;
 
   const interest = acc.movements
     .filter(trans => trans > 0)
     .map(deposit => deposit * (acc.interestRate / 100))
     .filter(interest => interest >= 1)
     .reduce((acc, c) => acc + c, 0);
-  labelInterest.textContent = `${interest} €`;
+  labelInterest.textContent = `${interest.toFixed(2)} €`;
 };
 
 const updateUI = function (acc) {
@@ -141,7 +138,7 @@ btnSignin.addEventListener('click', function (e) {
   e.preventDefault();
 
   let username = usernameLogin.value.toLowerCase().trim();
-  let pin = Number(pinLogin.value);
+  let pin = +pinLogin.value;
 
   currentUser = accounts.find(account => account.username === username);
   console.log(currentUser);
@@ -169,7 +166,7 @@ btnTransfer.addEventListener('click', function (e) {
     account => account.username === recipientUsername.value.toLowerCase()
   );
 
-  const recipientAmt = Number(recipientAmount.value);
+  const recipientAmt = +recipientAmount.value;
   if (
     recipientAmt &&
     recipientAcc !== currentUser &&
@@ -190,7 +187,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const loanAmt = Number(loanAmount.value);
+  const loanAmt = Math.floor(+loanAmount.value);
   console.log(currentUser);
 
   const userLoanStatus = currentUser.movements.some(
@@ -209,7 +206,7 @@ btnCloseAcc.addEventListener('click', function (e) {
 
   if (
     currentUser.username === usernameConfirm.value.toLowerCase() &&
-    currentUser.pin === Number(pinConfirm.value)
+    currentUser.pin === +pinConfirm.value
   ) {
     const accToClose = accounts.indexOf(currentUser);
     accounts.splice(accToClose, 1);
