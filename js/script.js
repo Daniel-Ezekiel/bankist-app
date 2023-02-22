@@ -125,7 +125,7 @@ const formatCurrency = (acc, transAmt) => {
     style: 'currency',
     currency: acc.currency,
   };
-  return new Intl.NumberFormat('pt-PT', options).format(transAmt);
+  return new Intl.NumberFormat(acc.locale, options).format(transAmt);
 };
 
 //Compute and Display balance
