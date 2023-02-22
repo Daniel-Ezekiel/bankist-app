@@ -110,14 +110,16 @@ const computeDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, c) => acc + c, 0);
   labelBalance.textContent = `${acc.balance.toFixed(2)} €`;
 
-  const now = new Date();
-  const day = `${now.getDate()}`.padStart(2, 0);
-  const month = `${now.getMonth() + 1}`.padStart(2, 0);
-  const year = now.getFullYear();
-  const hour = now.getHours();
-  const minute = now.getMinutes();
-
-  labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minute}`;
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  };
+  labelDate.textContent = new Intl.DateTimeFormat(acc.locale, options).format(
+    new Date()
+  );
 };
 //  Compute and Display all Transactions
 const displayTransactions = function (acc, sort = false) {
@@ -131,10 +133,7 @@ const displayTransactions = function (acc, sort = false) {
     const transactionType = trans > 0 ? 'deposit' : 'withdrawal';
 
     const transDate = new Date(transDates[i]);
-    const day = `${transDate.getDate()}`.padStart(2, 0);
-    const month = `${transDate.getMonth() + 1}`.padStart(2, 0);
-    const year = transDate.getFullYear();
-    const dateToDisplay = `${day}/${month}/${year}`;
+    const dateToDisplay = new Intl.DateTimeFormat(acc.locale).format(transDate);
 
     const transactionHTML = `
     <div class='transaction'>
