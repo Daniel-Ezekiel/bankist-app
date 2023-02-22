@@ -152,6 +152,10 @@ main.active {
   background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
 
+.date {
+  text-transform: uppercase;
+}
+
 .transaction-amount {
   font-size: 2rem;
 }

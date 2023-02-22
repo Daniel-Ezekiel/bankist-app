@@ -121,6 +121,21 @@ const computeDisplayBalance = function (acc) {
     new Date()
   );
 };
+
+const formatTransactionDates = (acc, transDate) => {
+  const calcDaysPassed = (date1, date2) => {
+    return Math.abs(date1 - date2) / (1000 * 60 * 60 * 24);
+  };
+
+  const daysPassed = calcDaysPassed(new Date(), transDate);
+
+  if (daysPassed < 1) return 'Today';
+  else if (daysPassed < 2) return 'Yesterday';
+  else if (daysPassed <= 7) return `${daysPassed} days left`;
+
+  return new Intl.DateTimeFormat(acc.locale).format(transDate);
+};
+
 //  Compute and Display all Transactions
 const displayTransactions = function (acc, sort = false) {
   const allTrans = sort
@@ -133,7 +148,7 @@ const displayTransactions = function (acc, sort = false) {
     const transactionType = trans > 0 ? 'deposit' : 'withdrawal';
 
     const transDate = new Date(transDates[i]);
-    const dateToDisplay = new Intl.DateTimeFormat(acc.locale).format(transDate);
+    const dateToDisplay = formatTransactionDates(acc, transDate);
 
     const transactionHTML = `
     <div class='transaction'>
