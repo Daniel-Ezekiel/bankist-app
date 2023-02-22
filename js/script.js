@@ -192,9 +192,10 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 
 /************************/
-let currentUser = account1;
-updateUI(currentUser);
-mainContainer.classList.add('active');
+let currentUser;
+// = account1;
+// updateUI(currentUser);
+// mainContainer.classList.add('active');
 
 // USER SIGN IN
 btnSignin.addEventListener('click', function (e) {
