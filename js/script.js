@@ -105,23 +105,7 @@ const account4 = {
 const accounts = [account1, account2, account3, account4];
 
 /***************************************/
-//Compute and Display balance
-const computeDisplayBalance = function (acc) {
-  acc.balance = acc.movements.reduce((acc, c) => acc + c, 0);
-  labelBalance.textContent = `${acc.balance.toFixed(2)} €`;
-
-  const options = {
-    hour: 'numeric',
-    minute: 'numeric',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  };
-  labelDate.textContent = new Intl.DateTimeFormat(acc.locale, options).format(
-    new Date()
-  );
-};
-
+// Format transaction dates
 const formatTransactionDates = (acc, transDate) => {
   const calcDaysPassed = (date1, date2) => {
     return Math.abs(date1 - date2) / (1000 * 60 * 60 * 24);
@@ -134,6 +118,31 @@ const formatTransactionDates = (acc, transDate) => {
   else if (daysPassed <= 7) return `${daysPassed} days left`;
 
   return new Intl.DateTimeFormat(acc.locale).format(transDate);
+};
+// Format Currency
+const formatCurrency = (acc, transAmt) => {
+  const options = {
+    style: 'currency',
+    currency: acc.currency,
+  };
+  return new Intl.NumberFormat('pt-PT', options).format(transAmt);
+};
+
+//Compute and Display balance
+const computeDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, c) => acc + c, 0);
+  labelBalance.textContent = `${formatCurrency(acc, acc.balance)}`;
+
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  };
+  labelDate.textContent = new Intl.DateTimeFormat(acc.locale, options).format(
+    new Date()
+  );
 };
 
 //  Compute and Display all Transactions
@@ -159,7 +168,7 @@ const displayTransactions = function (acc, sort = false) {
         </span>
         <span class='date'>${dateToDisplay}</span>
       </div>
-      <span class='transaction-amount'>${trans.toFixed(2)} €</span>
+      <span class='transaction-amount'>${formatCurrency(acc, trans)}</span>
     </div>
     `;
 
@@ -171,19 +180,22 @@ const displaySummary = function (acc) {
   const deposits = acc.movements
     .filter(trans => trans > 0)
     .reduce((acc, c) => acc + c, 0);
-  labelDeposits.textContent = `${deposits.toFixed(2)} €`;
+  labelDeposits.textContent = `${formatCurrency(acc, deposits)}`;
 
   const withdrawals = acc.movements
     .filter(trans => trans < 0)
     .reduce((acc, c) => acc + c, 0);
-  labelWithdrawals.textContent = `${Math.abs(withdrawals).toFixed(2)} €`;
+  labelWithdrawals.textContent = `${formatCurrency(
+    acc,
+    Math.abs(withdrawals)
+  )}`;
 
   const interest = acc.movements
     .filter(trans => trans > 0)
     .map(deposit => deposit * (acc.interestRate / 100))
     .filter(interest => interest >= 1)
     .reduce((acc, c) => acc + c, 0);
-  labelInterest.textContent = `${interest.toFixed(2)} €`;
+  labelInterest.textContent = `${formatCurrency(acc, interest)}`;
 };
 
 const updateUI = function (acc) {
@@ -207,10 +219,9 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 
 /************************/
-let currentUser;
-// = account1;
-// updateUI(currentUser);
-// mainContainer.classList.add('active');
+let currentUser = account1;
+updateUI(currentUser);
+mainContainer.classList.add('active');
 
 // USER SIGN IN
 btnSignin.addEventListener('click', function (e) {
