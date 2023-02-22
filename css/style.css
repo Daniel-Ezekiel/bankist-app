@@ -271,6 +271,9 @@ main.active {
   font-family: 'Raleway', sans-serif;
   cursor: pointer;
 }
+.timer {
+  font-weight: 700;
+}
 
 @media screen and (min-width: 540px) {
   nav p {

@@ -19,6 +19,7 @@ const labelBalance = document.querySelector('.balance');
 const labelDeposits = document.querySelector('.deposits');
 const labelWithdrawals = document.querySelector('.withdrawals');
 const labelInterest = document.querySelector('.interest');
+const labelTimer = document.querySelector('.timer');
 
 const usernameLogin = document.querySelector('#username');
 const pinLogin = document.querySelector('#pin');
@@ -180,22 +181,19 @@ const displaySummary = function (acc) {
   const deposits = acc.movements
     .filter(trans => trans > 0)
     .reduce((acc, c) => acc + c, 0);
-  labelDeposits.textContent = `${formatCurrency(acc, deposits)}`;
+  labelDeposits.textContent = formatCurrency(acc, deposits);
 
   const withdrawals = acc.movements
     .filter(trans => trans < 0)
     .reduce((acc, c) => acc + c, 0);
-  labelWithdrawals.textContent = `${formatCurrency(
-    acc,
-    Math.abs(withdrawals)
-  )}`;
+  labelWithdrawals.textContent = formatCurrency(acc, Math.abs(withdrawals));
 
   const interest = acc.movements
     .filter(trans => trans > 0)
     .map(deposit => deposit * (acc.interestRate / 100))
     .filter(interest => interest >= 1)
     .reduce((acc, c) => acc + c, 0);
-  labelInterest.textContent = `${formatCurrency(acc, interest)}`;
+  labelInterest.textContent = formatCurrency(acc, interest);
 };
 
 const updateUI = function (acc) {
@@ -219,9 +217,38 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 
 /************************/
-let currentUser = account1;
-updateUI(currentUser);
-mainContainer.classList.add('active');
+let currentUser, timer;
+// = account1;
+// updateUI(currentUser);
+// mainContainer.classList.add('active');
+
+const createLoginTimer = () => {
+  let time = 600;
+
+  function initTimer() {
+    const min = String(Math.floor(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+    time--;
+  }
+  initTimer();
+
+  timer = setInterval(function () {
+    const min = String(Math.floor(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    if (time === 0) {
+      clearInterval(timer);
+      mainContainer.classList.remove('active');
+      labelWelcome.textContent = 'Log in to get started';
+    }
+
+    time--;
+  }, 1000);
+};
 
 // USER SIGN IN
 btnSignin.addEventListener('click', function (e) {
@@ -236,6 +263,8 @@ btnSignin.addEventListener('click', function (e) {
   if (currentUser?.pin === pin) {
     labelWelcome.textContent = `Good day, ${currentUser.owner.split(' ')[0]}!`;
 
+    if (timer) clearInterval(timer);
+    createLoginTimer();
     updateUI(currentUser);
     mainContainer.classList.add('active');
   } else {
@@ -255,8 +284,8 @@ btnTransfer.addEventListener('click', function (e) {
   const recipientAcc = accounts.find(
     account => account.username === recipientUsername.value.toLowerCase()
   );
-
   const recipientAmt = +recipientAmount.value;
+
   if (
     recipientAmt &&
     recipientAcc !== currentUser &&
@@ -267,6 +296,8 @@ btnTransfer.addEventListener('click', function (e) {
     currentUser.movements.push(-recipientAmt);
     currentUser.movementsDates.push(new Date().toISOString());
 
+    if (timer) clearInterval(timer);
+    createLoginTimer();
     updateUI(currentUser);
   }
 
@@ -282,17 +313,23 @@ btnLoan.addEventListener('click', function (e) {
   const loanAmt = Math.floor(+loanAmount.value);
   console.log(currentUser);
 
-  const userLoanStatus = currentUser.movements.some(
-    amt => amt >= loanAmt * 0.1
-  );
-  if (loanAmt && userLoanStatus) {
-    currentUser.movements.push(loanAmt);
-    currentUser.movementsDates.push(new Date().toISOString());
-  }
-  updateUI(currentUser);
-
   loanAmount.value = '';
   loanAmount.blur();
+
+  setTimeout(function () {
+    const userLoanStatus = currentUser.movements.some(
+      amt => amt >= loanAmt * 0.1
+    );
+    if (loanAmt && userLoanStatus) {
+      currentUser.movements.push(loanAmt);
+      currentUser.movementsDates.push(new Date().toISOString());
+
+      updateUI(currentUser);
+    }
+  }, 2000);
+
+  if (timer) clearInterval(timer);
+  createLoginTimer();
 });
 
 // CLOSE ACCOUNT
@@ -322,3 +359,7 @@ btnSort.addEventListener('click', function () {
   displayTransactions(currentUser, !sorted);
   sorted = !sorted;
 });
+
+// function(){
+
+//
