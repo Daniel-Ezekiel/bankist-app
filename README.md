@@ -42,7 +42,7 @@ Some demo account names and passwords to test the web app include;
         <a target="_blank" href="https://github.com/Daniel-Ezekiel/bankist-website">Bankist Website</a>
         <br />
         <a target="_blank" href="https://github.com/Daniel-Ezekiel/bankist-website">
-            <img src="https://github.com/Daniel-Ezekiel/bankist-website/blob/main/assets/preview.png" width="100%"  alt="Bankist website"/>
+            <img src="https://github.com/Daniel-Ezekiel/bankist-website/blob/main/assets/widget.png" width="100%"  alt="Bankist website"/>
         </a>
     </td>
   </tr>
